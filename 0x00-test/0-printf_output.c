@@ -1,3 +1,4 @@
+#include "main.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -13,17 +14,29 @@
 
 int _printf(const char *format, ...)
 {
+int (*prin)(const char *format, ...) = &printf;
+
 va_list print;
-int b;
+double b;
+unsigned int l = 0;
 
 va_start(print, format);
 
 b = va_arg(print, int);
 
-write(1, &b, (strlen(format) - 1));
+prin(format);
+
+write(1, &b, 1);
 
 va_end(print);
 
-return (0);
+while (*format != '\0')
+{
+l = strlen(format);
+l++;
+format++;
+}
+
+return (l);
 
 }
